@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"here-ly.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="第一章：认识 Markdown —— 为什么它值得学习1.0 写在前面笔者于今天开始写博客，还没开始写，就在 md 编辑器决定上思考了半天，于是我觉得用 md 入门作为我的第一篇技术博客。 这篇技术博客会包含以下内容：  md 的用途 部分教程以及评价 md 编辑器横评  假如你是刚刚学习计算机的小白，学好 md 可以大大增强你的学习和交流能力。 假如你是正在优化 harness 的 vibe c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="md初级教程(上)">
+<meta property="og:url" content="https://here-ly.github.io/2026/05/29/md%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B(%E4%B8%8A)/index.html">
+<meta property="og:site_name" content="here-ly&#39;s Blog">
+<meta property="og:description" content="第一章：认识 Markdown —— 为什么它值得学习1.0 写在前面笔者于今天开始写博客，还没开始写，就在 md 编辑器决定上思考了半天，于是我觉得用 md 入门作为我的第一篇技术博客。 这篇技术博客会包含以下内容：  md 的用途 部分教程以及评价 md 编辑器横评  假如你是刚刚学习计算机的小白，学好 md 可以大大增强你的学习和交流能力。 假如你是正在优化 harness 的 vibe c">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-29T08:23:56.000Z">
+<meta property="article:modified_time" content="2026-05-29T13:42:54.466Z">
+<meta property="article:author" content="here-ly">
+<meta property="article:tag" content="markdown">
+<meta property="article:tag" content="入门">
+<meta property="article:tag" content="教程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://here-ly.github.io/2026/05/29/md%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B(%E4%B8%8A)/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://here-ly.github.io/2026/05/29/md%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B(%E4%B8%8A)/","path":"2026/05/29/md初级教程(上)/","title":"md初级教程(上)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>md初级教程(上) | here-ly's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">here-ly's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录学习与成长</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E8%AE%A4%E8%AF%86-Markdown-%E2%80%94%E2%80%94-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E5%80%BC%E5%BE%97%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">第一章：认识 Markdown —— 为什么它值得学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-0-%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">1.0 写在前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Markdown-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.</span> <span class="nav-text">1.1 Markdown 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Markdown-%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E5%8A%BF"><span class="nav-number">1.3.</span> <span class="nav-text">1.2 Markdown 有哪些优势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%AF%E6%96%87%E6%9C%AC%E7%9A%84%E6%B0%B8%E6%81%92%E6%80%A7"><span class="nav-number">1.3.1.</span> <span class="nav-text">纯文本的永恒性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%8F%8B%E5%A5%BD"><span class="nav-number">1.3.2.</span> <span class="nav-text">版本控制友好</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0%E9%80%9A%E7%94%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">跨平台通用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AI-%E6%97%B6%E4%BB%A3%E7%9A%84%E7%BB%93%E6%9E%84%E5%8C%96%E4%BC%98%E5%8A%BF"><span class="nav-number">1.3.4.</span> <span class="nav-text">AI 时代的结构化优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%93%E6%B3%A8%E5%86%85%E5%AE%B9%EF%BC%8C%E8%80%8C%E9%9D%9E%E6%8E%92%E7%89%88"><span class="nav-number">1.3.5.</span> <span class="nav-text">专注内容，而非排版</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9AMarkdown-%E7%9A%84%E5%85%AD%E5%A4%A7%E6%88%98%E5%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">第二章：Markdown 的六大战场</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3%E4%B8%8E-README"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 技术文档与 README</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E4%B8%8E%E6%96%87%E7%AB%A0"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 个人博客与文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 笔记与知识管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-AI-%E5%AF%B9%E8%AF%9D%E4%B8%8E-Prompt-%E7%BC%96%E5%86%99"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 AI 对话与 Prompt 编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E6%BC%94%E7%A4%BA%E5%B9%BB%E7%81%AF%E7%89%87"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 演示幻灯片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E5%AD%A6%E6%9C%AF%E8%AE%BA%E6%96%87%E4%B8%8E%E4%B9%A6%E7%B1%8D"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 学术论文与书籍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E4%B8%8A%E6%89%8B-Markdown-%E2%80%94%E2%80%94-%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87%E4%B8%8E%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="nav-number">3.</span> <span class="nav-text">第三章：上手 Markdown —— 工具准备与学习路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%8E%A8%E8%8D%90%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%BB%83%E4%B9%A0%E7%8E%AF%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 推荐你的第一个练习环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%8C%89%E7%94%A8%E9%80%94%E9%80%89%E6%8B%A9%E4%BD%A0%E7%9A%84%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 按用途选择你的学习教程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%80%EF%BC%9A%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3%E4%B8%8E%E5%BC%80%E5%8F%91%E5%86%99%E4%BD%9C"><span class="nav-number">3.2.1.</span> <span class="nav-text">场景一：技术文档与开发写作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%BA%8C%EF%BC%9A%E9%80%9A%E7%94%A8%E5%85%A5%E9%97%A8%E4%B8%8E%E6%97%A5%E5%B8%B8%E5%86%99%E4%BD%9C"><span class="nav-number">3.2.2.</span> <span class="nav-text">场景二：通用入门与日常写作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%89%EF%BC%9A%E5%8A%A8%E6%89%8B%E5%AE%9E%E8%B7%B5%E4%B8%8E%E4%BA%A4%E4%BA%92%E5%AD%A6%E4%B9%A0"><span class="nav-number">3.2.3.</span> <span class="nav-text">场景三：动手实践与交互学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E5%9B%9B%EF%BC%9A%E6%8E%A2%E7%B4%A2%E6%9B%B4%E5%A4%9A%E8%B5%84%E6%BA%90"><span class="nav-number">3.2.4.</span> <span class="nav-text">场景四：探索更多资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Markdown-%E7%9A%84%E4%B8%BB%E8%A6%81%E6%96%B9%E8%A8%80"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 Markdown 的主要方言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CommonMark-%E2%80%94%E2%80%94-%E6%A0%87%E5%87%86%E8%A7%84%E8%8C%83"><span class="nav-number">3.3.1.</span> <span class="nav-text">CommonMark —— 标准规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GFM%EF%BC%88GitHub-Flavored-Markdown%EF%BC%89%E2%80%94%E2%80%94-%E5%BC%80%E5%8F%91%E8%80%85%E9%A6%96%E9%80%89"><span class="nav-number">3.3.2.</span> <span class="nav-text">GFM（GitHub Flavored Markdown）—— 开发者首选</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Obsidian-Flavored-Markdown%EF%BC%88OFM%EF%BC%89%E2%80%94%E2%80%94-%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E4%B8%93%E7%94%A8"><span class="nav-number">3.3.3.</span> <span class="nav-text">Obsidian Flavored Markdown（OFM）—— 知识管理专用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pandoc%E2%80%99s-Markdown-%E2%80%94%E2%80%94-%E5%AD%A6%E6%9C%AF%E4%B8%8E%E5%A4%9A%E6%A0%BC%E5%BC%8F%E5%87%BA%E7%89%88"><span class="nav-number">3.3.4.</span> <span class="nav-text">Pandoc’s Markdown —— 学术与多格式出版</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E6%96%B9%E8%A8%80%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 方言选择建议</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">here-ly</p>
+  <div class="site-description" itemprop="description">here-ly 的个人博客，分享技术、生活与思考</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://here-ly.github.io/2026/05/29/md%E5%88%9D%E7%BA%A7%E6%95%99%E7%A8%8B(%E4%B8%8A)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="here-ly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="here-ly's Blog">
+      <meta itemprop="description" content="here-ly 的个人博客，分享技术、生活与思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="md初级教程(上) | here-ly's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          md初级教程(上)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-29 16:23:56 / 修改时间：21:42:54" itemprop="dateCreated datePublished" datetime="2026-05-29T16:23:56+08:00">2026-05-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="第一章：认识-Markdown-——-为什么它值得学习"><a href="#第一章：认识-Markdown-——-为什么它值得学习" class="headerlink" title="第一章：认识 Markdown —— 为什么它值得学习"></a>第一章：认识 Markdown —— 为什么它值得学习</h2><h3 id="1-0-写在前面"><a href="#1-0-写在前面" class="headerlink" title="1.0 写在前面"></a>1.0 写在前面</h3><p>笔者于今天开始写博客，还没开始写，就在 md 编辑器决定上思考了半天，于是我觉得用 md 入门作为我的第一篇技术博客。</p>
+<p>这篇技术博客会包含以下内容：</p>
+<ul>
+<li>md 的用途</li>
+<li>部分教程以及评价</li>
+<li>md 编辑器横评</li>
+</ul>
+<p>假如你是刚刚学习计算机的小白，学好 md 可以大大增强你的学习和交流能力。</p>
+<p>假如你是正在优化 harness 的 vibe coder，对 md 更灵活的使用，无疑是理想的 agent 输入。</p>
+<p>假如你正在筹备自己的博客，一个合理的 md 编辑器自然是你需要的。</p>
+<p>假如你已经通晓万物，希望你可以指出我的不足，让我对我的博客进行改进。</p>
+<h3 id="1-1-Markdown-是什么"><a href="#1-1-Markdown-是什么" class="headerlink" title="1.1 Markdown 是什么"></a>1.1 Markdown 是什么</h3><p><del>是这篇博客使用的语言</del></p>
+<p>2004 年，程序员 John Gruber 做了一件看似微不足道、却影响深远的事：他创造了一种让普通人也能轻松排版文字的工具，并把它命名为 <strong>Markdown</strong>。</p>
+<p>在 Markdown 出现之前，如果你想在电脑上写一段格式漂亮的文字，通常只有两条路可走：</p>
+<ul>
+<li><p><strong>走进 Word 的世界</strong>：调整字体、设置行距、对齐段落……你花在排版上的时间，往往比写作本身还多。更糟的是，换一台电脑，格式可能全乱。</p>
+<p><del>丑陋而糟糕的闭源语言</del></p>
+</li>
+<li><p><strong>拥抱 HTML 的严谨</strong>：用 <code>&lt;h1&gt;</code> 写标题，用 <code>&lt;strong&gt;</code> 加粗，用 <code>&lt;a&gt;</code> 插入链接。功能强大，但满屏的标签让阅读原始文件变成一场灾难。</p>
+<p><del>实则笔者还没学会</del></p>
+</li>
+</ul>
+<p>Markdown 走了第三条路。它用几个简单到近乎直觉的符号，就能表达丰富的格式：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 这是一级标题</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**这是加粗文字**</span>，<span class="emphasis">*这是斜体*</span>。</span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; 这是一段引用，自带文艺气质。</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 列表项一</span><br><span class="line"><span class="bullet">-</span> 列表项二</span><br><span class="line"><span class="bullet">-</span> 列表项三</span><br><span class="line">~~这是我喜欢用的划去符号~~</span><br></pre></td></tr></table></figure>
+
+<p>渲染后的效果美观大方，而更重要的是——<strong>即使不渲染，纯文本本身也极易阅读</strong>。这正是 Gruber 的设计哲学：”Markdown 的语法应该让人在作为纯文本阅读时，也能清晰传达结构和语义。”</p>
+<blockquote>
+<p>对于 agent，这一点十分重要，最近虽然有不少怀疑 html 会取代 md 的声音，我对 html 取代 md 一直持怀疑态度，诚然 html 更加好看严谨，但 md 更接近 llm 预训练语料的，llm 在这类文本内会有更加的表现，html 可能会造成不必要的上下文污染。</p>
+</blockquote>
+<h3 id="1-2-Markdown-有哪些优势"><a href="#1-2-Markdown-有哪些优势" class="headerlink" title="1.2 Markdown 有哪些优势"></a>1.2 Markdown 有哪些优势</h3><h4 id="纯文本的永恒性"><a href="#纯文本的永恒性" class="headerlink" title="纯文本的永恒性"></a>纯文本的永恒性</h4><p>想象一下，多年后，你翻开今天写的日记。如果是 Word 文档，你可能需要先找到一台还能运行旧版 Office 的电脑；如果是某个笔记软件的专属格式，而这家公司已经倒闭，你的文字可能永远锁在加密文件里。<del>闭源软件全责</del></p>
+<p>但 Markdown 不同。它是纯文本。五十年前诞生的 <code>.txt</code> 文件今天依然能打开，五十年后的 Markdown 文件也一样。<strong>不依赖任何特定软件，不担心格式过时</strong>，这是数字时代最接近”纸和笔”的永恒性。</p>
+<h4 id="版本控制友好"><a href="#版本控制友好" class="headerlink" title="版本控制友好"></a>版本控制友好</h4><p>对于写作者来说，”改稿”是常态。传统的方式是保存 <code>文章_v1.docx</code>、<code>文章_v2.docx</code>、<code>文章_最终版.docx</code>、<code>文章_最终版_真的.docx</code>，最后文件夹里堆满了谁也分不清的版本。</p>
+<p>如果你使用 Git，就会理解部分 Markdown 的好处：每一次修改都被记录，你可以看到”第三段被删除了”、”哪个链接被替换了”、”什么时候加了注释”。对于技术文档、学术论文、甚至是小说创作，这种<strong>可追溯性</strong>都是无价之宝。</p>
+<h4 id="跨平台通用"><a href="#跨平台通用" class="headerlink" title="跨平台通用"></a>跨平台通用</h4><p>Windows、macOS、Linux、iOS、Android——无论你用哪种设备，都有无数款支持 Markdown 的编辑器。你今天在 Mac 上写的文章，明天在 Windows 上打开，后天在手机上修改，格式不会有丝毫错乱。</p>
+<p>更进一步，几乎所有现代内容平台都原生支持 Markdown：GitHub、Notion、语雀、知乎、CSDN……<strong>学会一套语法，到处都能用</strong>。</p>
+<h4 id="AI-时代的结构化优势"><a href="#AI-时代的结构化优势" class="headerlink" title="AI 时代的结构化优势"></a>AI 时代的结构化优势</h4><p>这是 Markdown 在 2020 年之后获得的新优势。当你与 ChatGPT、Claude、Gemini 等大语言模型交流时，会发现一个有趣的现象：这些 AI 对 Markdown 的理解，远比对 Word 文档或富文本的理解要准确得多，而且它们的输出也是 md 格式。</p>
+<blockquote>
+<p>这个选择就来源于 md 的泛用性，用户可以把回答复制到任何一个现代软件并保持原样的同时，可以输出公式、层次、表格等复杂结构。</p>
+</blockquote>
+<p>用代码块包裹指令，AI 能精准识别边界；用表格组织需求，AI 能按列对齐输出；用层级标题梳理逻辑，AI 的回答也会更有条理。在 Prompt Engineering 中，Markdown 几乎成了一种<strong>通用语</strong>。</p>
+<h4 id="专注内容，而非排版"><a href="#专注内容，而非排版" class="headerlink" title="专注内容，而非排版"></a>专注内容，而非排版</h4><p>这可能是 Markdown 最被低估的优点。当你用 Markdown 写作时，你不会（其实是没法）纠结”这个标题用几号字”、”这段引用要不要缩进两字符”、”列表项的圆点是实心还是空心”。</p>
+<p>你只有一个任务：把符号放在正确的位置，然后继续写下去。<strong>格式不会打断你的思路，排版不会消耗你的意志力</strong>。对于创作者来说，这种”无摩擦”的体验，本身就是一种奢侈。<del>这就是为什么我的博客不美观，我会去学其它语言的，也许。</del></p>
+<hr>
+<h2 id="第二章：Markdown-的六大战场"><a href="#第二章：Markdown-的六大战场" class="headerlink" title="第二章：Markdown 的六大战场"></a>第二章：Markdown 的六大战场</h2><p>讲了 Markdown 的理念和优势，接下来看看它到底能在哪些场景下大展身手。</p>
+<h3 id="2-1-技术文档与-README"><a href="#2-1-技术文档与-README" class="headerlink" title="2.1 技术文档与 README"></a>2.1 技术文档与 README</h3><p>这是 Markdown 的”发家之地”。打开 GitHub，几乎每个项目根目录下都有一个 <code>README.md</code>（这里 md 并不是粗口，而是 markdown 的标志）。开发者用它来介绍项目功能、展示安装步骤、列出使用示例、说明贡献规范。</p>
+<p>为什么程序员爱它？因为技术文档需要<strong>频繁更新、多人协作、版本对齐</strong>。Markdown 让这一切变得简单：提交一次代码，文档同步更新；发起一个 Pull Request，评审者直接在行内评论；文档和代码放在同一个 Git 仓库里，永远不会”文档说 A，代码跑 B”。</p>
+<h3 id="2-2-个人博客与文章"><a href="#2-2-个人博客与文章" class="headerlink" title="2.2 个人博客与文章"></a>2.2 个人博客与文章</h3><p>越来越多的独立博客作者选择用 Markdown 写作。静态网站生成器（如 Hugo、Jekyll、Hexo）直接把 <code>.md</code> 文件转换成精美网页；Ghost、WordPress 等平台也提供了 Markdown 编辑模式。</p>
+<p>对于写作者来说，这意味着<strong>内容即资产</strong>。你的文章不锁在某个平台的编辑器里，而是实实在在保存在本地的 <code>.md</code> 文件中。想换博客主题？直接迁移。想备份到网盘？复制粘贴即可。</p>
+<h3 id="2-3-笔记与知识管理"><a href="#2-3-笔记与知识管理" class="headerlink" title="2.3 笔记与知识管理"></a>2.3 笔记与知识管理</h3><p>Obsidian、Logseq、Joplin、思源笔记……这些近年来的知识管理工具，底层都是 Markdown。你可以用 <code>[[双链]]</code> 连接相关概念，用标签 <code>#tag</code> 组织主题，用代码块记录技术片段，用任务列表管理待办。</p>
+<blockquote>
+<p>笔者推荐 obsidian，以后会有相关博客。</p>
+</blockquote>
+<p>在这个场景下，Markdown 不仅仅是一种格式，更是<strong>构建第二大脑的基础设施</strong>。你的知识以纯文本形式沉淀，十年后再翻开，依然鲜活可读。</p>
+<h3 id="2-4-AI-对话与-Prompt-编写"><a href="#2-4-AI-对话与-Prompt-编写" class="headerlink" title="2.4 AI 对话与 Prompt 编写"></a>2.4 AI 对话与 Prompt 编写</h3><p>当你想让 AI 帮你写代码、改文章、分析数据时，用 Markdown 组织你的 Prompt，往往能得到质量高得多的回答。</p>
+<p>举个例子：如果你直接说”给我写个 Python 脚本”，AI 可能给出一段格式混乱的代码；但如果你用 Markdown 写成：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">请帮我写一个 Python 脚本，要求如下：</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="strong">**功能**</span>：批量重命名文件夹内的图片文件</span><br><span class="line"><span class="bullet">-</span> <span class="strong">**输入**</span>：包含 <span class="code">`.jpg`</span> 和 <span class="code">`.png`</span> 的文件夹路径</span><br><span class="line"><span class="bullet">-</span> <span class="strong">**命名规则**</span>：<span class="code">`图片_001.jpg`</span>、<span class="code">`图片_002.png`</span> 以此类推</span><br><span class="line"><span class="bullet">-</span> <span class="strong">**输出**</span>：打印重命名前后的对照表</span><br><span class="line"></span><br><span class="line">请用代码块输出完整脚本，并附上简要说明。</span><br></pre></td></tr></table></figure>
+
+<p>AI 会立刻明白你的层次结构，输出的代码格式工整、注释清晰、逻辑完整。在和 LLM 协作的时代，<strong>Markdown 是效率的放大器</strong>。</p>
+<h3 id="2-5-演示幻灯片"><a href="#2-5-演示幻灯片" class="headerlink" title="2.5 演示幻灯片"></a>2.5 演示幻灯片</h3><p>别再用 PowerPoint 的拖拽和动画折磨自己了。如果你做的是技术分享、学术报告、或者任何”内容大于形式”的演示，Marp、Reveal.js、Slidev 等工具让你直接用 Markdown 写幻灯片。</p>
+<p>每一页幻灯片就是几个标题和几行正文，逻辑清晰、修改便捷。你不需要花时间对齐文本框、调整配色方案，只需要关心”这一页要传达什么信息”。对于开发者和技术写作者来说，这是一种解脱。</p>
+<h3 id="2-6-学术论文与书籍"><a href="#2-6-学术论文与书籍" class="headerlink" title="2.6 学术论文与书籍"></a>2.6 学术论文与书籍</h3><p>这听起来可能有些意外——Markdown 不是学术圈的”正经工具”。但借助 Pandoc，你可以把 Markdown 转换为 LaTeX、PDF、Word、ePub 等多种格式，完美处理公式、脚注、文献引用、目录生成等需求。</p>
+<p>很多学者已经开始用 Markdown 写初稿：它足够轻量，让你快速推进思路；它又能导出成期刊要求的格式，不需要在写作阶段就陷入 LaTeX 的复杂语法。对于长篇著作（如技术书籍），Markdown 配合版本控制，比 Word 的”修订模式”优雅太多。</p>
+<hr>
+<h2 id="第三章：上手-Markdown-——-工具准备与学习路径"><a href="#第三章：上手-Markdown-——-工具准备与学习路径" class="headerlink" title="第三章：上手 Markdown —— 工具准备与学习路径"></a>第三章：上手 Markdown —— 工具准备与学习路径</h2><h3 id="3-1-推荐你的第一个练习环境"><a href="#3-1-推荐你的第一个练习环境" class="headerlink" title="3.1 推荐你的第一个练习环境"></a>3.1 推荐你的第一个练习环境</h3><p>如果你还没有安装任何 Markdown 编辑器，我建议从 <strong>VS Code</strong> 开始。它是免费的、跨平台的，而且装上 Markdown 插件后，写 Markdown 的体验会非常流畅。</p>
+<p><strong>下载与安装：</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/">VS Code 官方下载页面</a> — 选择对应系统的版本安装即可</li>
+</ul>
+<p><strong>安装 Markdown 插件：</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/languages/markdown">Markdown 插件推荐与使用指南</a> — VS Code 官方文档，介绍内置的 Markdown 支持以及如何安装增强插件（如 Markdown All in One）</li>
+</ul>
+<p>装好 VS Code 后，新建一个文件，把后缀改成 <code>.md</code>，就可以开始写了。按 <code>Ctrl+Shift+V</code>（Mac 是 <code>Cmd+Shift+V</code>）可以实时预览渲染效果。</p>
+<p>如果你暂时不想安装软件，或者想先在线体验一下，可以用这两个工具：</p>
+<ul>
+<li><strong><a target="_blank" rel="noopener" href="https://stackedit.io/">StackEdit</a></strong> — 在线 Markdown 编辑器，左边写、右边实时预览，不需要注册就能用，适合第一次上手时随便试试</li>
+<li><strong><a target="_blank" rel="noopener" href="https://dillinger.io/">Dillinger</a></strong> — 另一个在线编辑器，界面简洁，支持导出 PDF 和 HTML，如果你想在线看看 Markdown 渲染出来的实际效果，用这个很方便</li>
+</ul>
+<h3 id="3-2-按用途选择你的学习教程"><a href="#3-2-按用途选择你的学习教程" class="headerlink" title="3.2 按用途选择你的学习教程"></a>3.2 按用途选择你的学习教程</h3><p>以下教程按使用场景排列，你可以直接跳转到最符合你需求的章节。</p>
+<h4 id="场景一：技术文档与开发写作"><a href="#场景一：技术文档与开发写作" class="headerlink" title="场景一：技术文档与开发写作"></a>场景一：技术文档与开发写作</h4><p><strong>教程</strong>：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/languages/markdown">VS Code Markdown 支持 - 官方文档</a></p>
+<p><strong>用途评价</strong>：适合程序员和技术写作者。如果你已经在用 VS Code 写代码，不需要切换工具就能写专业的技术文档。这篇官方教程会教你如何在编辑器中预览 Markdown、使用快捷键、以及推荐哪些插件能大幅提升写作效率。学完后，你可以直接开始写项目的 README 或技术文档。</p>
+<h4 id="场景二：通用入门与日常写作"><a href="#场景二：通用入门与日常写作" class="headerlink" title="场景二：通用入门与日常写作"></a>场景二：通用入门与日常写作</h4><p><strong>教程</strong>：<a target="_blank" rel="noopener" href="https://www.markdownguide.org/getting-started/">Markdown Guide - Getting Started</a></p>
+<p><strong>用途评价</strong>：适合所有新手。这是最权威的 Markdown 入门教程，从最基础的语法开始，循序渐进地讲解标题、段落、列表、链接、图片、表格等核心元素。无论你是想写博客、做笔记，还是整理资料，学完这篇都能应对绝大多数日常场景。</p>
+<h4 id="场景三：动手实践与交互学习"><a href="#场景三：动手实践与交互学习" class="headerlink" title="场景三：动手实践与交互学习"></a>场景三：动手实践与交互学习</h4><p><strong>教程</strong>：<a target="_blank" rel="noopener" href="https://www.markdowntutorial.com/">Markdown Tutorial</a></p>
+<p><strong>用途评价</strong>：适合喜欢边学边练的用户。这是一个在线交互式教程，每一课都会给你一个具体的写作任务，左侧输入 Markdown，右侧实时看到渲染效果。相比纯阅读式学习，这种方式印象更深。大约 30 分钟可以完成全部课程，之后你就能熟练写出格式漂亮的 Markdown 文档。</p>
+<h4 id="场景四：探索更多资源"><a href="#场景四：探索更多资源" class="headerlink" title="场景四：探索更多资源"></a>场景四：探索更多资源</h4><p><strong>教程</strong>：<a target="_blank" rel="noopener" href="https://github.com/mundimark/awesome-markdown">Awesome Markdown</a></p>
+<p><strong>用途评价</strong>：适合想要深入挖掘 Markdown 生态的进阶用户。这个 GitHub 仓库汇集了 Markdown 相关的编辑器、工具、库、教程等海量资源。当你掌握了基础语法，想要寻找特定场景的工具时，这里是绝佳的起点。</p>
+<blockquote>
+<p><strong>学习建议</strong>：如果你是第一次接触 Markdown，建议按 3.2（场景二）→ 3.2（场景三）→ 3.2（场景一）的顺序学习——先通过 Markdown Guide 建立整体认知，再用 Markdown Tutorial 动手巩固，最后根据你的实际工作场景深入学习 VS Code 的相关配置。</p>
+</blockquote>
+<h3 id="3-3-Markdown-的主要方言"><a href="#3-3-Markdown-的主要方言" class="headerlink" title="3.3 Markdown 的主要方言"></a>3.3 Markdown 的主要方言</h3><p>当你开始搜索 Markdown 教程时，可能会遇到 “GFM”、”CommonMark”、”Obsidian Flavored Markdown” 之类的术语。这些都是 Markdown 的<strong>方言（Flavor）</strong>——它们在基础语法上大同小异，但在扩展功能上各有侧重。</p>
+<p>了解方言很重要，因为：</p>
+<ul>
+<li>你选择的编辑器支持哪种方言，决定了你能使用哪些高级功能</li>
+<li>你写的文档要在哪里展示（GitHub、博客、笔记软件），那里的渲染器可能只支持特定方言</li>
+<li>不同方言之间不完全兼容，混用可能导致格式错乱</li>
+</ul>
+<p>以下是四种最主要的方言及其核心特性：</p>
+<h4 id="CommonMark-——-标准规范"><a href="#CommonMark-——-标准规范" class="headerlink" title="CommonMark —— 标准规范"></a>CommonMark —— 标准规范</h4><p>CommonMark 是 Markdown 的标准化版本，由一组开发者于 2014 年发起，旨在消除原始 Markdown 规范中的模糊地带。</p>
+<p><strong>主要特性：</strong></p>
+<ul>
+<li>最严格的语法规范，定义清晰、无歧义</li>
+<li>只包含最基础的元素：标题、段落、列表、链接、图片、代码块、引用、分隔线</li>
+<li><strong>不支持</strong>：表格、任务列表、删除线、脚注、数学公式等扩展功能</li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>追求最大兼容性的写作</li>
+<li>作为学习 Markdown 的”纯净起点”</li>
+<li>需要确保文档在任何平台都能正确渲染</li>
+</ul>
+<p><strong>代表平台：</strong> 严格遵循 CommonMark 的解析器、部分静态网站生成器</p>
+<h4 id="GFM（GitHub-Flavored-Markdown）——-开发者首选"><a href="#GFM（GitHub-Flavored-Markdown）——-开发者首选" class="headerlink" title="GFM（GitHub Flavored Markdown）—— 开发者首选"></a>GFM（GitHub Flavored Markdown）—— 开发者首选</h4><p>GFM 是 GitHub 在 CommonMark 基础上扩展的方言，是目前使用最广泛的 Markdown 变体。</p>
+<p><strong>官方文档与教程：</strong></p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://github.github.com/gfm/">GFM 官方规范</a> — GitHub 官方发布的完整规范文档，适合查阅具体语法的精确定义</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">GitHub Markdown 交互教程</a> — GitHub 官方帮助文档，包含大量实时可交互的语法示例</p>
+<p><del>这里理应有一个交互网站，我还没有找到，等我学明白md了自己写一个</del></p>
+</li>
+</ul>
+<p><strong>主要特性：</strong></p>
+<ul>
+<li>完全兼容 CommonMark 的所有基础语法</li>
+<li><strong>表格</strong>：用 <code>|</code> 和 <code>-</code> 绘制对齐表格</li>
+<li><strong>任务列表</strong>：<code>- [ ]</code> 和 <code>- [x]</code> 创建可勾选的待办事项</li>
+<li><strong>删除线</strong>：<code>~~文字~~</code> 添加删除线效果</li>
+<li><strong>代码块高亮</strong>：支持指定语言，获得语法着色</li>
+<li><strong>自动链接</strong>：URL 无需包裹尖括号即可自动识别</li>
+<li><strong>@提及</strong> 和 <strong>Issue&#x2F;PR 引用</strong>：<code>#123</code>、<code>@username</code></li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>GitHub 仓库的 README、Wiki、Issue、PR 描述</li>
+<li>技术文档和开发者博客</li>
+<li>初学者入门（兼容性好、功能实用）</li>
+</ul>
+<p><strong>代表平台：</strong> GitHub、GitLab、Gitee、VS Code 默认预览、Joplin、多数技术博客平台</p>
+<h4 id="Obsidian-Flavored-Markdown（OFM）——-知识管理专用"><a href="#Obsidian-Flavored-Markdown（OFM）——-知识管理专用" class="headerlink" title="Obsidian Flavored Markdown（OFM）—— 知识管理专用"></a>Obsidian Flavored Markdown（OFM）—— 知识管理专用</h4><p>Obsidian 是近年来最流行的个人知识管理工具之一，它在 GFM 基础上增加了大量面向知识工作者的功能。</p>
+<p><strong>主要特性：</strong></p>
+<ul>
+<li>继承 GFM 的所有功能（表格、任务列表、代码高亮等）</li>
+<li><strong>双向链接</strong>：<code>[[笔记名]]</code> 在笔记之间建立双向关联</li>
+<li><strong>标签系统</strong>：<code>#标签名</code> 快速分类和检索</li>
+<li><strong>脚注</strong>：<code>[^1]</code> 插入脚注，适合学术写作</li>
+<li><strong>LaTeX 数学公式</strong>：<ul>
+<li>行内公式：用单个美元符号包裹，如 <code>$E=mc^2$</code>，会嵌入在段落文字中间</li>
+<li>块级公式（独立公式）：用双美元符号包裹，如 <code>$$\sum_{i=1}^{n} x_i = X$$</code>，会单独占一行并居中显示</li>
+<li>这是 OFM 的核心学术功能，支持完整的 TeX 数学语法，包括希腊字母、分数、矩阵、积分等</li>
+</ul>
+</li>
+<li><strong>Mermaid 图表</strong>：直接在文档中绘制流程图、时序图、甘特图</li>
+<li><strong>Callouts</strong>：<code>&gt; [!note]</code> 创建醒目的提示框（警告、提示、引用等）</li>
+<li><strong>嵌入文件</strong>：<code>![[其他笔记]]</code> 将另一篇笔记的内容嵌入当前文档</li>
+<li><strong>YAML Front Matter</strong>：文档顶部的元数据区域，用于管理属性</li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>个人知识库和第二大脑构建</li>
+<li>学术研究（公式 + 脚注 + 文献引用）</li>
+<li>复杂项目的文档组织（用双向链接关联需求、设计、代码）</li>
+</ul>
+<p><strong>代表平台：</strong> Obsidian、部分支持双向链接的笔记软件</p>
+<h4 id="Pandoc’s-Markdown-——-学术与多格式出版"><a href="#Pandoc’s-Markdown-——-学术与多格式出版" class="headerlink" title="Pandoc’s Markdown —— 学术与多格式出版"></a>Pandoc’s Markdown —— 学术与多格式出版</h4><p>Pandoc 是一个强大的文档转换工具，它的 Markdown 方言专为”写一次，到处发布”设计。</p>
+<p><strong>主要特性：</strong></p>
+<ul>
+<li>包含 CommonMark + GFM 的大部分基础功能</li>
+<li><strong>定义列表</strong>：术语和解释的配对列表</li>
+<li><strong>脚注</strong>：自动编号或手动指定编号</li>
+<li><strong>文献引用</strong>：与 BibTeX&#x2F;Zotero 集成，<code>[@smith2020]</code> 格式引用</li>
+<li><strong>交叉引用</strong>：图表、表格、章节的自动编号和引用</li>
+<li><strong>LaTeX 数学公式</strong>：<ul>
+<li>行内公式：<code>$...$</code>，如 <code>$\alpha + \beta = \gamma$</code></li>
+<li>块级公式：<code>$$...$$</code>，如 <code>$$\int_{a}^{b} f(x) \, dx = F(b) - F(a)$$</code></li>
+<li>相比 OFM，Pandoc 支持更多 TeX 扩展和公式编号，适合严谨的学术排版</li>
+</ul>
+</li>
+<li><strong>原始 HTML&#x2F;LaTeX</strong>：在 Markdown 中直接插入目标格式的原生代码</li>
+<li><strong>多列布局</strong>、<strong>自定义容器</strong>等出版级功能</li>
+<li><strong>原生支持导出</strong>：一键转换为 PDF、Word、ePub、LaTeX、HTML 等格式</li>
+</ul>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>学术论文和学位论文</li>
+<li>技术书籍和手册</li>
+<li>需要多格式发布的文档（如同时生成网页和 PDF）</li>
+</ul>
+<p><strong>代表平台：</strong> Pandoc 命令行工具、Zettlr、R Markdown</p>
+<h3 id="3-4-方言选择建议"><a href="#3-4-方言选择建议" class="headerlink" title="3.4 方言选择建议"></a>3.4 方言选择建议</h3><table>
+<thead>
+<tr>
+<th>你的需求</th>
+<th>推荐方言</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>刚入门，想快速上手</td>
+<td><strong>GFM</strong></td>
+<td>兼容最广、文档最多、功能够用</td>
+</tr>
+<tr>
+<td>在 GitHub 上写项目文档</td>
+<td><strong>GFM</strong></td>
+<td>原生支持，功能完全匹配</td>
+</tr>
+<tr>
+<td>建立个人知识库</td>
+<td><strong>OFM</strong></td>
+<td>双向链接和图谱是知识管理的核心</td>
+</tr>
+<tr>
+<td>写学术论文</td>
+<td><strong>Pandoc</strong></td>
+<td>引用、公式、多格式导出一步到位</td>
+</tr>
+<tr>
+<td>追求最大兼容性</td>
+<td><strong>CommonMark</strong></td>
+<td>严格规范，任何解析器都能正确渲染</td>
+</tr>
+<tr>
+<td>不知道选哪个</td>
+<td><strong>GFM</strong></td>
+<td>它是目前的事实标准，几乎所有编辑器都支持</td>
+</tr>
+</tbody></table>
+<p><strong>一个重要的提醒：</strong> 不同方言之间并不是完全互斥的。你可以先用 GFM 写日常内容，在需要知识管理时切换到 Obsidian，在需要发表论文时导出为 Pandoc 格式。关键是先掌握基础语法（它们在所有方言中都一样）然后学会GFM，再根据场景学习扩展功能。</p>
+<hr>
+<blockquote>
+<p><strong>小结</strong></p>
+<p>在上篇中，我们介绍了 Markdown 的核心理念与优势、六大应用场景、上手工具与教程推荐，以及四种主要方言的特性与选择建议。Markdown 不是一款软件，而是一种思维方式。它让你相信：<strong>内容永远比排版重要，可迁移性永远比功能丰富重要，纯文本的简洁永远比富文本的复杂重要</strong>。</p>
+<p>下篇我们将带来编辑器横评，帮助你在众多工具中找到最适合自己的那一款。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/markdown/" rel="tag"># markdown</a>
+              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
+              <a href="/tags/%E5%85%A5%E9%97%A8/" rel="tag"># 入门</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/29/Hello-World-%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" rel="prev" title="Hello World - 我的第一篇博客">
+                  <i class="fa fa-angle-left"></i> Hello World - 我的第一篇博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">here-ly</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
