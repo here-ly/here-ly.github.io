@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"here-ly.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="这是笔者学习随机过程的学术博客，基于 MIT OCW 和 J. Chang 的讲义。 笔者只有薄弱的概率论基础，如有错误欢迎指正。   第一章 有关随机过程1.0 写在前头笔者正在学习随机过程，动机来自于离散优化问题：当我们需要在庞大的离散状态空间中寻找最优解时，直接的显式解往往不存在。这时我们通常会采用随机过程的方法（比如”如果邻居比我大我就转移到邻居”）来寻找最值。为了提高成功概率和收敛速率">
+<meta property="og:type" content="article">
+<meta property="og:title" content="应用随机过程学习笔记一">
+<meta property="og:url" content="https://here-ly.github.io/2026/05/30/%E5%BA%94%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/index.html">
+<meta property="og:site_name" content="here-ly&#39;s Blog">
+<meta property="og:description" content="这是笔者学习随机过程的学术博客，基于 MIT OCW 和 J. Chang 的讲义。 笔者只有薄弱的概率论基础，如有错误欢迎指正。   第一章 有关随机过程1.0 写在前头笔者正在学习随机过程，动机来自于离散优化问题：当我们需要在庞大的离散状态空间中寻找最优解时，直接的显式解往往不存在。这时我们通常会采用随机过程的方法（比如”如果邻居比我大我就转移到邻居”）来寻找最值。为了提高成功概率和收敛速率">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-30T11:13:36.000Z">
+<meta property="article:modified_time" content="2026-05-30T11:13:58.088Z">
+<meta property="article:author" content="here-ly">
+<meta property="article:tag" content="MCMC">
+<meta property="article:tag" content="模拟退火">
+<meta property="article:tag" content="随机过程">
+<meta property="article:tag" content="马尔可夫链">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://here-ly.github.io/2026/05/30/%E5%BA%94%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://here-ly.github.io/2026/05/30/%E5%BA%94%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/","path":"2026/05/30/应用随机过程学习笔记一/","title":"应用随机过程学习笔记一"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>应用随机过程学习笔记一 | here-ly's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">here-ly's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录学习与成长</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%9C%89%E5%85%B3%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">第一章 有关随机过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-0-%E5%86%99%E5%9C%A8%E5%89%8D%E5%A4%B4"><span class="nav-number">1.1.</span> <span class="nav-text">1.0 写在前头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">1.1 马尔可夫链与基本极限定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%8F%AF%E9%80%86%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE-Time-Reversibility"><span class="nav-number">2.</span> <span class="nav-text">第二章 可逆马尔可夫链 (Time Reversibility)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-0-%E4%BB%80%E4%B9%88%E6%98%AF%E6%97%B6%E9%97%B4%E5%8F%AF%E9%80%86%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">2.0 什么是时间可逆性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%BB%86%E8%87%B4%E5%B9%B3%E8%A1%A1%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">2.1 细致平衡条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%87%8D%E8%A6%81%E4%BE%8B%E5%AD%90"><span class="nav-number">2.3.</span> <span class="nav-text">2.2 重要例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E4%B8%80%E4%B8%AA%E7%A5%9E%E5%A5%87%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">2.4.</span> <span class="nav-text">2.3 一个神奇的例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-Metropolis-%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">第三章 Metropolis 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-0-%E4%BB%8E%E6%A8%A1%E6%8B%9F%E5%88%B0%E9%87%87%E6%A0%B7"><span class="nav-number">3.1.</span> <span class="nav-text">3.0 从模拟到采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="nav-number">3.2.</span> <span class="nav-text">3.1 基本思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Metropolis-%E7%AE%97%E6%B3%95%E7%9A%84%E8%BF%90%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">3.2 Metropolis 算法的运行方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Metropolis-%E6%96%B9%E6%B3%95%E7%9A%84%E5%BC%BA%E5%A4%A7%E4%B9%8B%E5%A4%84"><span class="nav-number">3.4.</span> <span class="nav-text">3.3 Metropolis 方法的强大之处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB-Simulated-Annealing"><span class="nav-number">4.</span> <span class="nav-text">第四章 模拟退火 (Simulated Annealing)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-%E4%BB%8E%E9%87%87%E6%A0%B7%E5%88%B0%E4%BC%98%E5%8C%96"><span class="nav-number">4.1.</span> <span class="nav-text">4.0 从采样到优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%9A%E6%B8%A9%E5%BA%A6%E5%8F%82%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">4.1 核心思想：温度参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Metropolis-%E8%BD%AC%E7%A7%BB%E7%9F%A9%E9%98%B5%EF%BC%88%E5%B8%A6%E6%B8%A9%E5%BA%A6%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">4.2 Metropolis 转移矩阵（带温度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%86%B7%E5%8D%B4-Schedule"><span class="nav-number">4.4.</span> <span class="nav-text">4.3 冷却 Schedule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB%E7%9A%84%E8%BF%90%E8%A1%8C"><span class="nav-number">4.5.</span> <span class="nav-text">4.4 模拟退火的运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E9%9D%9E%E6%97%B6%E9%BD%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE%E7%9A%84%E9%81%8D%E5%8E%86%E6%80%A7"><span class="nav-number">4.6.</span> <span class="nav-text">4.5 非时齐马尔可夫链的遍历性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB%E4%B8%BB%E5%AE%9A%E7%90%86"><span class="nav-number">4.7.</span> <span class="nav-text">4.6 模拟退火主定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%96%E5%9D%91%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">挖坑总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">here-ly</p>
+  <div class="site-description" itemprop="description">here-ly 的个人博客，分享技术、生活与思考</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://here-ly.github.io/2026/05/30/%E5%BA%94%E7%94%A8%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="here-ly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="here-ly's Blog">
+      <meta itemprop="description" content="here-ly 的个人博客，分享技术、生活与思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="应用随机过程学习笔记一 | here-ly's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          应用随机过程学习笔记一
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-30 19:13:36 / 修改时间：19:13:58" itemprop="dateCreated datePublished" datetime="2026-05-30T19:13:36+08:00">2026-05-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>这是笔者学习随机过程的学术博客，基于 <a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/6-262-discrete-stochastic-processes-spring-2011/pages/syllabus/">MIT OCW</a> 和 <a target="_blank" rel="noopener" href="http://www.stat.yale.edu/~pollard/Courses/251.spring2013/Handouts/Chang-notes.pdf">J. Chang 的讲义</a>。</p>
+<p>笔者只有薄弱的概率论基础，如有错误欢迎指正。</p>
+</blockquote>
+<hr>
+<h2 id="第一章-有关随机过程"><a href="#第一章-有关随机过程" class="headerlink" title="第一章 有关随机过程"></a>第一章 有关随机过程</h2><h3 id="1-0-写在前头"><a href="#1-0-写在前头" class="headerlink" title="1.0 写在前头"></a>1.0 写在前头</h3><p>笔者正在学习随机过程，动机来自于离散优化问题：当我们需要在庞大的离散状态空间中寻找最优解时，直接的显式解往往不存在。这时我们通常会采用随机过程的方法（比如”如果邻居比我大我就转移到邻居”）来寻找最值。为了提高成功概率和收敛速率，我们需要深入研究随机过程的理论基础。</p>
+<p>这篇文章几乎不需要任何前置知识，可以放心阅读。</p>
+<h3 id="1-1-马尔可夫链与基本极限定理"><a href="#1-1-马尔可夫链与基本极限定理" class="headerlink" title="1.1 马尔可夫链与基本极限定理"></a>1.1 马尔可夫链与基本极限定理</h3><p><strong>马尔可夫链</strong>（Markov Chain）是一类特殊的随机过程，其核心特征是<strong>无记忆性</strong>：下一状态只依赖于当前状态，与过去的历史无关。形式上，若 ${X_n}$ 是状态空间 $S$ 上的随机过程，则：</p>
+<p>$$<br>\mathbb{P}{X_{n+1} &#x3D; j \mid X_n &#x3D; i, X_{n-1}, \ldots, X_0} &#x3D; \mathbb{P}{X_{n+1} &#x3D; j \mid X_n &#x3D; i} &#x3D; P(i,j)<br>$$</p>
+<p>转移矩阵 $P &#x3D; (P(i,j))$ 完全刻画了链的演化规律。</p>
+<blockquote>
+<p>假如你没有概率论基础的话，你只需要知道 $\mathbb{P}{A   \mid B,C}$ 是$B,C$发生时$A$的概率</p>
+</blockquote>
+<p><strong>基本极限定理</strong>（Basic Limit Theorem）告诉我们：<strong>不可约、非周期的有限马尔可夫链有且仅有一个平稳分布 $\pi$</strong>，且无论从什么初始分布出发，链的分布都会收敛到 $\pi$（笔者将会在笔记零里面给出证明）：</p>
+<p>$$<br>\lim_{n \to \infty} \mathbb{P}{X_n &#x3D; j} &#x3D; \pi(j)<br>$$</p>
+<p>这启发了我们一个强大的想法：如果我们想要”模拟”某个目标分布 $\pi$，只需要构造一个以 $\pi$ 为平稳分布的马尔可夫链，然后让它运行足够长时间。但问题在于——<strong>如何构造这样的转移矩阵 $P$？ 如何让它快速收敛到目标分布</strong></p>
+<p>这正是后面的章节要回答的问题。</p>
+<hr>
+<h2 id="第二章-可逆马尔可夫链-Time-Reversibility"><a href="#第二章-可逆马尔可夫链-Time-Reversibility" class="headerlink" title="第二章 可逆马尔可夫链 (Time Reversibility)"></a>第二章 可逆马尔可夫链 (Time Reversibility)</h2><h3 id="2-0-什么是时间可逆性"><a href="#2-0-什么是时间可逆性" class="headerlink" title="2.0 什么是时间可逆性"></a>2.0 什么是时间可逆性</h3><p>想象你正在观看一段马尔可夫链轨迹的电影。现在我问你：<strong>如果把录像带倒放，你能分辨出正放和倒放吗？</strong></p>
+<p>对于某些链，答案显而易见。<strong>周期链</strong> $1 \to 2 \to 3 \to 1$ 就是典型的反例——如果你看到状态从 3 跳到 2，那一定是倒放，因为正向不可能发生这个转移。</p>
+<p>从某种意义上来说，我们不喜欢这样周期性强的链。比如还是上述1、2、3，我们取99%到下一个数、1%不变的马尔可夫链，它就收敛得很慢，而且从不同的方向收敛</p>
+<p><strong>定义 2.3</strong>：马尔可夫链 ${X_n}$ 是<strong>时间可逆的</strong>，如果对每个 $n$：</p>
+<p>$$<br>(X_0, X_1, \ldots, X_n) \stackrel{\mathcal{D}}{&#x3D;} (X_n, X_{n-1}, \ldots, X_0)<br>$$</p>
+<p>即联合分布与其反向联合分布完全相同。令人惊讶的是，粒子碰撞确实是时间可逆的！</p>
+<blockquote>
+<p>这似乎和物理科普里面的庞加莱回归有关，有兴趣的读者可以研究它的数学形式（其实和我们第0章讨论的常返性观念更深）</p>
+</blockquote>
+<h3 id="2-1-细致平衡条件"><a href="#2-1-细致平衡条件" class="headerlink" title="2.1 细致平衡条件"></a>2.1 细致平衡条件</h3><p>从定义出发，我们可以推导出一个极其实用的判定条件（读者不妨作为练习）：</p>
+<p><strong>命题 2.5</strong>：马尔可夫链 ${X_n}$ 时间可逆 $\iff$ 初始分布 $\pi$ 满足：</p>
+<ol>
+<li><strong>平稳性</strong>：$\pi P &#x3D; \pi$</li>
+<li><strong>细致平衡方程</strong>（Detailed Balance）：</li>
+</ol>
+<p>$$<br>\pi(i) P(i,j) &#x3D; \pi(j) P(j,i) \quad \text{对所有 } i,j<br>$$</p>
+<p>细致平衡比平稳性更强。平稳性（全局平衡）说：流入状态 $j$ 的总概率流等于流出的总概率流。而细致平衡要求<strong>每一对状态之间的概率流都相互平衡</strong>。</p>
+<p>你可以把状态想象成相互连接的水箱。全局平衡只要求每个水箱的水位不变。但细致平衡要求每根连接管内的水流都是双向平衡的——这是更强的条件。(也就是基尔霍夫电流方程和限制完全没有电流的区别)</p>
+<p><strong>为什么细致平衡这么好用？</strong> 因为验证 $\pi(i)P(i,j) &#x3D; \pi(j)P(j,i)$ 往往比直接解 $\pi P &#x3D; \pi$ 容易得多，而且它直接给出了构造转移矩阵的方法。</p>
+<blockquote>
+<p>更深层次的讲，细致平衡条件下，这意味着熵产生率为0，而且转移无旋，这里或许需要更细致的研究</p>
+</blockquote>
+<p><strong>命题 2.6</strong>：若细致平衡方程成立，则 $\pi$ 是平稳分布。</p>
+<p><em>证明</em>：对细致平衡方程关于 $i$ 求和：</p>
+<p>$$<br>\sum_i \pi(i) P(i,j) &#x3D; \sum_i \pi(j) P(j,i) &#x3D; \pi(j)<br>$$</p>
+<p>这正是全局平衡方程。</p>
+<h3 id="2-2-重要例子"><a href="#2-2-重要例子" class="headerlink" title="2.2 重要例子"></a>2.2 重要例子</h3><p><strong>例子 2.7：生灭链</strong></p>
+<p>所有平稳的<strong>生灭链</strong>（birth and death chains）都是时间可逆的。生灭链只能转移到相邻状态（$|i-j| \leq 1$），利用概率流平衡立即得到细致平衡。</p>
+<p><strong>例子 2.8：图上的随机游走</strong></p>
+<p>在连通图 $G &#x3D; (S, E)$ 上，从节点 $i$ 以等概率 $1&#x2F;d(i)$ 游走到邻居。这是一个非常自然的链，其平稳分布出奇简单：</p>
+<p>$$<br>\pi(i) &#x3D; \frac{d(i)}{\sum_{j \in S} d(j)}<br>$$</p>
+<p>验证：对邻居 $j \in N(i)$，</p>
+<p>$$<br>\pi(i)P(i,j) &#x3D; \frac{d(i)}{\sum d(k)} \cdot \frac{1}{d(i)} &#x3D; \frac{1}{\sum d(k)} &#x3D; \pi(j)P(j,i)<br>$$</p>
+<p>满足细致平衡，所以图上的随机游走总是时间可逆的。这个例子在后续的 Metropolis 方法中至关重要。</p>
+<h3 id="2-3-一个神奇的例子"><a href="#2-3-一个神奇的例子" class="headerlink" title="2.3 一个神奇的例子"></a>2.3 一个神奇的例子</h3><p>现在让我们看一个时间可逆性的经典应用——它会导出两个非常反直觉的结论。</p>
+<p><strong>模型设定</strong>：两个办公室职员 Andrew 和 Bertha 处理文件。新文件以概率 $p$ 到达 Andrew，Andrew 处理完后传给 Bertha，Bertha 处理完后文件离开系统。</p>
+<p>设 $X_n$ 为 Andrew 的文件数，$Y_n$ 为 Bertha 的文件数。Andrew 的过程是一个生灭链，其服务完成概率为 $a$。（也就是p的概率新增文件，$(1-p)a$概率处理掉文件，其余概率不做变化）</p>
+<p><strong>惊人结论 1</strong>：Andrew 的<strong>离开过程</strong>（departures）与<strong>到达过程</strong>（arrivals）独立！</p>
+<p>具体来说，定义 $A_n$ &#x3D; 1（有新到达），$D_n$ &#x3D; 1（有离开）。由于时间可逆性：</p>
+<ul>
+<li>在反向过程中，”未来到达”对应正向的”过去离开”</li>
+<li>因此 $(D_1, D_2, \ldots, D_k)$ 与 $X_k$ 独立（未来的到来与现在的文件数无关）</li>
+<li>更惊人的是：<strong>离开过程是 i.i.d. Bernoulli($p$)</strong>，与服务率 $a$ 无关！（这是因为输入输出需要同速度，但这还是令人震惊）</li>
+</ul>
+<p>这意味着 Andrew 的输出统计特性完全由输入决定，他自己处理得多快并不影响输出的统计规律。</p>
+<p><strong>惊人结论 2</strong>：<strong>两个队列长度独立！</strong></p>
+<p>设 $\pi_a$ 和 $\pi_b$ 分别是 Andrew 和 Bertha 的平稳分布（几何分布）：</p>
+<p>$$<br>\pi_a(i) &#x3D; \left(\frac{p}{q_a}\right)^i \left(1 - \frac{p}{q_a}\right), \quad q_a &#x3D; (1-p)a<br>$$</p>
+<p>$$<br>\pi_b(i) &#x3D; \left(\frac{p}{q_b}\right)^i \left(1 - \frac{p}{q_b}\right), \quad q_b &#x3D; (1-p)b<br>$$</p>
+<p><strong>联合平稳分布是乘积形式</strong>：</p>
+<p>$$<br>\pi(i,j) &#x3D; \pi_a(i) \pi_b(j)<br>$$</p>
+<p>这意味着 $X_n$ 和 $Y_n$ 是独立的！直观上这很不可思议——Bertha 的输入完全来自 Andrew 的输出，两者的队列怎么会独立呢？</p>
+<blockquote>
+<p>读者可以自行手动验证，尝试不使用时间可逆性，可以发现这个无关和几何分布的无记忆性息息相关，其实没有那么违背直觉，但时间可逆性给这个问题赋予了难以捉摸的灵性</p>
+</blockquote>
+<p>时间可逆性把一个复杂的相关性问题转化成了简单问题。</p>
+<hr>
+<h2 id="第三章-Metropolis-方法"><a href="#第三章-Metropolis-方法" class="headerlink" title="第三章 Metropolis 方法"></a>第三章 Metropolis 方法</h2><h3 id="3-0-从模拟到采样"><a href="#3-0-从模拟到采样" class="headerlink" title="3.0 从模拟到采样"></a>3.0 从模拟到采样</h3><p>在第一章我们提到，基本极限定理告诉我们：如果构造一个以目标分布 $\pi$ 为平稳分布的马尔可夫链，运行足够长时间就能得到 $\pi$ 的近似样本。但<strong>如何构造这样的链</strong>？</p>
+<p>Metropolis 方法给出了一个优雅的答案。它由 Metropolis 等人在 1953 年提出，是统计物理和贝叶斯统计中最重要的采样工具之一。</p>
+<h3 id="3-1-基本思想"><a href="#3-1-基本思想" class="headerlink" title="3.1 基本思想"></a>3.1 基本思想</h3><p><strong>问题</strong>：在有限集 $S$ 上，我们想要从分布 $\pi$ 中采样。假设我们知道 $\pi$ 的”形状”但不一定是归一化常数，即我们知道 $\pi(i) \propto f(i)$ 但不知道归一化常数。</p>
+<p><strong>方法</strong>：</p>
+<ol>
+<li>在 $S$ 上选择一个连通图结构 $G &#x3D; (S, E)$</li>
+<li>定义图上随机游走的转移矩阵：</li>
+</ol>
+<p>$$<br>P_{rw}(i,j) &#x3D; \begin{cases} \frac{1}{d(i)} &amp; j \in N(i) \ 0 &amp; \text{otherwise} \end{cases}<br>$$</p>
+<ol start="3">
+<li>随机游走的平稳分布是 $\pi_{rw}(i) \propto d(i)$（由例 2.8）</li>
+<li>我们希望调整这个链，使其平稳分布变为 $\pi(i) \propto d(i)f(i)$</li>
+</ol>
+<p><strong>Metropolis 转移矩阵</strong>定义为：</p>
+<p>$$<br>P(i,j) &#x3D; \begin{cases}<br>\frac{1}{d(i)} \min\left{1, \frac{f(j)}{f(i)}\right} &amp; j \in N(i) \<br>1 - \sum_{k \in N(i)} P(i,k) &amp; j &#x3D; i \<br>0 &amp; \text{otherwise}<br>\end{cases}<br>$$</p>
+<blockquote>
+<p>不必感到惊异，我们知道细致平衡等价于，任意一条路两边流过的量一样，这边能给出的最大流量是$f(i)$(注意$f(i)$定义),另一边类似，我们取出流量最小值就可以得到$P(i,j)$</p>
+</blockquote>
+<h3 id="3-2-Metropolis-算法的运行方式"><a href="#3-2-Metropolis-算法的运行方式" class="headerlink" title="3.2 Metropolis 算法的运行方式"></a>3.2 Metropolis 算法的运行方式</h3><p>实际运行 Metropolis 链非常直观：</p>
+<ol>
+<li><strong>提议</strong>（Propose）：从当前状态 $i$ 随机选一个邻居 $j$</li>
+<li><strong>接受概率</strong>（Acceptance probability）：<ul>
+<li>若 $f(j) \geq f(i)$，<strong>必定接受</strong></li>
+<li>若 $f(j) &lt; f(i)$，以概率 $f(j)&#x2F;f(i)$ <strong>接受</strong></li>
+<li>否则<strong>拒绝</strong>，留在 $i$</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-3-Metropolis-方法的强大之处"><a href="#3-3-Metropolis-方法的强大之处" class="headerlink" title="3.3 Metropolis 方法的强大之处"></a>3.3 Metropolis 方法的强大之处</h3><p>Metropolis 方法有一个非常大的优点：<strong>不需要知道归一化常数</strong>！</p>
+<p>只需知道比率 $f(j)&#x2F;f(i)$，即 $\pi(j)&#x2F;\pi(i)$。这在很多实际场景中至关重要：</p>
+<ul>
+<li><strong>贝叶斯统计</strong>：后验分布 $P(\theta|x) \propto \mu(\theta) P(x|\theta)$，归一化常数（配分函数）通常难以计算</li>
+<li><strong>约束满足问题</strong>：均匀抽样约束解，解的数量未知</li>
+</ul>
+<p>Metropolis 方法的思想极其简洁，但它开启了马尔可夫链蒙特卡洛（MCMC）方法的整个领域。正如 Chang 在讲义中指出的，这个方法 “so simple it may sound naive”，却在实践中展现出了惊人的威力。</p>
+<hr>
+<h2 id="第四章-模拟退火-Simulated-Annealing"><a href="#第四章-模拟退火-Simulated-Annealing" class="headerlink" title="第四章 模拟退火 (Simulated Annealing)"></a>第四章 模拟退火 (Simulated Annealing)</h2><h3 id="4-0-从采样到优化"><a href="#4-0-从采样到优化" class="headerlink" title="4.0 从采样到优化"></a>4.0 从采样到优化</h3><p>我们已经学会了如何用 Metropolis 方法从任意分布中采样。现在考虑一个更实际的问题：<strong>优化</strong>。</p>
+<p>假设我们要最小化定义在状态空间 $S$ 上的代价函数 $c(\cdot)$。例如：</p>
+<ul>
+<li>图像处理：$S &#x3D; {0,1}^d$，$d$ 可以是 40,000（200×200 像素的图像）</li>
+<li>旅行商问题（TSP）：$S$ 是所有城市排列</li>
+<li>组合优化：各种 NP-hard 问题</li>
+</ul>
+<p>这些问题的状态空间往往巨大到无法穷举。我们需要一种巧妙的方法。</p>
+<h3 id="4-1-核心思想：温度参数"><a href="#4-1-核心思想：温度参数" class="headerlink" title="4.1 核心思想：温度参数"></a>4.1 核心思想：温度参数</h3><p>模拟退火的关键洞察来自统计物理：<strong>如果把优化问题看作能量最小化问题，那么低温下的 Boltzmann 分布会集中在能量最低的状态上</strong>。</p>
+<blockquote>
+<p>我不喜欢这个视角，它用物理学模糊了我们的认知，这在我看来和神学无异，我们喜欢这么思考： 我们希望集中在最大值点，于是按照分数（T&#x3D;0）来直接做马尔可夫链，但差异过大（T过小）时收敛过慢，我们可以一步步把平衡状态推进到T&#x3D;0（这涉及到了转移函数变化的马尔可夫链，我们稍后将会研究）</p>
+</blockquote>
+<p>对每个温度 $T &gt; 0$，定义 Boltzmann 分布：</p>
+<p>$$<br>\alpha_T(i) &#x3D; \frac{d(i) e^{-c(i)&#x2F;T}}{G(T)}<br>$$</p>
+<p>其中 $G(T) &#x3D; \sum_{i \in S} d(i) e^{-c(i)&#x2F;T}$ 是归一化常数。（也就是为了分布和为一，这个手法你一定在softmax里面也见过）</p>
+<p>当 $T \downarrow 0$ 时，$\alpha_T$ 收敛到仅在全局最小值上分配概率的分布 $\alpha^*$</p>
+<p>这意味着：如果我们能从 $\alpha_T$ 中采样，且 $T$ 足够小，那么样本几乎一定在全局最小值附近。</p>
+<h3 id="4-2-Metropolis-转移矩阵（带温度）"><a href="#4-2-Metropolis-转移矩阵（带温度）" class="headerlink" title="4.2 Metropolis 转移矩阵（带温度）"></a>4.2 Metropolis 转移矩阵（带温度）</h3><p>我们用 Metropolis 方法来构造以 $\alpha_T$ 为平稳分布的链。令 $f(i) &#x3D; e^{-c(i)&#x2F;T}$，则：</p>
+<p>$$<br>A_T(i,j) &#x3D; \frac{1}{d(i)} \min\left{1, e^{-(c(j)-c(i))&#x2F;T}\right}<br>$$</p>
+<p><strong>温度高低的行为</strong>：</p>
+<ul>
+<li><strong>高温</strong>（$T \to \infty$）：几乎总是接受候选，接近随机游走，广泛探索（高温时近似随机游走，可能看起来有些意义不明，我们将会用文献和实验研究这一点）</li>
+<li><strong>低温</strong>（$T \to 0$）：很少接受”上山”移动，接近贪婪下降，精细搜索</li>
+<li><strong>$T &#x3D; 0$</strong>：从不接受”上山”移动，<strong>会陷入局部最优！</strong></li>
+</ul>
+<h3 id="4-3-冷却-Schedule"><a href="#4-3-冷却-Schedule" class="headerlink" title="4.3 冷却 Schedule"></a>4.3 冷却 Schedule</h3><p>不能一直固定温度运行。需要<strong>逐渐降低温度</strong>，让链从”探索”过渡到”利用”：</p>
+<p>$$<br>T_n &#x3D; \frac{a}{\log(n+b)}<br>$$</p>
+<p>这是<strong>对数冷却</strong> schedule。直觉上：</p>
+<ul>
+<li>降温太快：链来不及在当前温度下达到平稳分布</li>
+<li>降温太慢：收敛太慢，不实用</li>
+<li>对数冷却：理论保证收敛的最快冷却速率<blockquote>
+<p>具体理论我们会给出，在我的<strong>实践</strong>里面对数降温有明显的降温过慢的问题，根本原因就是理论考察的情况过于不利，一些更快的降温策略会在后续的实践文章给出</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="4-4-模拟退火的运行"><a href="#4-4-模拟退火的运行" class="headerlink" title="4.4 模拟退火的运行"></a>4.4 模拟退火的运行</h3><p>${X_n}$ 是<strong>非时齐马尔可夫链</strong>（转移矩阵随时间变化）：</p>
+<p>$$<br>\mathbb{P}{X_{n+1} &#x3D; j \mid X_n &#x3D; i} &#x3D; A_{T_n}(i,j)<br>$$</p>
+<p>$$<br>\nu_n &#x3D; \nu_0 A_{T_0} A_{T_1} \cdots A_{T_{n-1}}<br>$$</p>
+<h3 id="4-5-非时齐马尔可夫链的遍历性"><a href="#4-5-非时齐马尔可夫链的遍历性" class="headerlink" title="4.5 非时齐马尔可夫链的遍历性"></a>4.5 非时齐马尔可夫链的遍历性</h3><p>为了证明模拟退火的收敛性，我们需要理解非时齐链的理论。</p>
+<p><strong>记号</strong>：$P_n$ 是时刻 $n$ 到 $n+1$ 的转移矩阵，$P^{(m,n)} &#x3D; \prod_{k&#x3D;m}^{n-1} P_k$ 是复合转移矩阵。</p>
+<p><strong>定义 4.1（强遍历性）</strong>：存在分布 $\pi^*$ 使得：</p>
+<p>$$<br>\lim_{n \to \infty} \sup_{i \in S} |P^{(m,n)}(i, \cdot) - \pi^*| &#x3D; 0 \quad \text{对所有 } m<br>$$</p>
+<p><strong>定义 4.2（弱遍历性）</strong>：</p>
+<p>$$<br>\lim_{n \to \infty} \sup_{i,j \in S} |P^{(m,n)}(i, \cdot) - P^{(m,n)}(j, \cdot)| &#x3D; 0 \quad \text{对所有 } m<br>$$</p>
+<ul>
+<li><strong>弱遍历性</strong>：”遗忘”初始状态（loss of memory）</li>
+<li><strong>强遍历性</strong>：遗忘 + 收敛到固定分布</li>
+</ul>
+<p><strong>遍历系数</strong>：</p>
+<p>$$<br>\delta(P) &#x3D; \sup_{i,j \in S} |P(i,\cdot) - P(j,\cdot)| &#x3D; \frac{1}{2} \sup_{i,j} \sum_k |P(i,k) - P(j,k)|<br>$$</p>
+<blockquote>
+<p>也就是任意两个输入，分布的最大差值 这可以自然的得到下面结论（这里输入的分布差值可以达到1，输出分布差作为输入的函数是凸的，所以$\delta$可以理解为差值最大放大倍数）</p>
+</blockquote>
+<p><strong>引理 4.3</strong>：$\delta(PQ) \leq \delta(P)\delta(Q)$</p>
+<p><strong>命题 4.4（弱遍历性充分条件）</strong>：若存在 $n_0 &lt; n_1 &lt; \cdots$ 使得：</p>
+<p>$$<br>\sum_k [1 - \delta(P^{(n_k, n_{k+1})})] &#x3D; \infty<br>$$</p>
+<p>则链是弱遍历的。</p>
+<p><strong>命题 4.5（强遍历性充分条件）</strong>：若链弱遍历，且存在平稳分布序列 $\pi_n$（$\pi_n$ 是 $P_n$ 的平稳分布）使得：</p>
+<p>$$<br>\sum_n |\pi_n - \pi_{n+1}| &lt; \infty<br>$$</p>
+<p>则链强遍历，且极限分布 $\pi^* &#x3D; \lim_{n \to \infty} \pi_n$。</p>
+<p><em>证明思路</em>：对任意 $l &gt; k$ 和 $m &gt; l$，三角不等式分解为三项：</p>
+<p>$$<br>|P^{(k,m)}(i,\cdot) - \pi^<em>| \leq \underbrace{|P^{(k,m)}(i,\cdot) - \pi_l P^{(l,m)}|}<em>{\text{弱遍历性}} + \underbrace{|\pi_l P^{(l,m)} - \pi_m|}</em>{\sum |\pi_n - \pi_{n+1}| &lt; \infty} + \underbrace{|\pi_m - \pi^</em>|}_{\text{收敛}}<br>$$</p>
+<h3 id="4-6-模拟退火主定理"><a href="#4-6-模拟退火主定理" class="headerlink" title="4.6 模拟退火主定理"></a>4.6 模拟退火主定理</h3><p><strong>定理 4.6（主定理）</strong>：冷却 schedule $T_0, T_1, \ldots$ 满足：</p>
+<p>(i) $T_{n+1} &lt; T_n$（单调递减）<br>(ii) $T_n \to 0$<br>(iii) $\sum_k \exp(-rL&#x2F;T_{kr-1}) &#x3D; \infty$</p>
+<p>则：</p>
+<p>$$<br>|A^{(n)}(i, \cdot) - \alpha^*| \to 0 \quad \text{对所有 } i \in S<br>$$</p>
+<p>其中 $r$ 是图的半径，$L$ 是最大局部代价差（也就是一步对价值的最大影响）。</p>
+<p><strong>证明策略</strong>：</p>
+<p><strong>步骤 1</strong>：证明<strong>弱遍历性</strong>——验证命题 4.4 的条件。</p>
+<p>取 $n_k &#x3D; kr$，证明：</p>
+<p>$$<br>\sum_k [1 - \delta(P^{(kr-r, kr)})] &#x3D; \infty<br>$$</p>
+<p><strong>关键引理 4.7</strong>：对足够大的 $m$，对所有 $i \in S$：</p>
+<p>$$<br>P^{(m-r,m)}(i, i_0) \geq D^{-r} \exp(-rL&#x2F;T_{m-1})<br>$$</p>
+<p>其中 $i_0$ 是图的中心，$D &#x3D; \max_j d(j)$。</p>
+<p><em>证明</em>：对邻居 $j \in N(i)$：</p>
+<p>$$<br>P_{ij}(n) &#x3D; \frac{1}{d(i)} \min{1, e^{-(c(j)-c(i))&#x2F;T_n}} \geq D^{-1} e^{-L&#x2F;T_n}<br>$$</p>
+<p>因此在 $r$ 步内到达中心的概率有下界。</p>
+<p><strong>步骤 2</strong>：证明<strong>强遍历性</strong>——验证命题 4.5 的条件。</p>
+<p>需要：$\sum_n |\alpha_{T_n} - \alpha_{T_{n+1}}| &lt; \infty$</p>
+<p>利用引理 4.8：若 $i \in S^<em>$（全局最小值集合），则 $\pi_{n+1}(i) &gt; \pi_n(i)$；若 $i \notin S^</em>$，则存在 $\tilde{n}_i$ 使得对 $n \geq \tilde{n}<em>i$ 有 $\pi</em>{n+1}(i) &lt; \pi_n(i)$。</p>
+<p>所以取 $T_n &#x3D; \frac{\gamma}{\log n}$（$\gamma \geq rL$，$n &gt; 1$），满足定理条件。</p>
+<p><strong>注意</strong>：结论是<strong>分布收敛</strong>，不是<strong>几乎必然收敛</strong>。模拟退火会无限次逃离全局最小值，但在全局最小值附近的时间比例趋于 1。正如 Chang 所说：”if our procedure has the nice property of always escaping eventually from local minima, then we must live with the fact that it will also eventually ‘escape’ from global minima.”</p>
+<hr>
+<h2 id="挖坑总结"><a href="#挖坑总结" class="headerlink" title="挖坑总结"></a>挖坑总结</h2><ol>
+<li>笔记零：有关马尔可夫链基础</li>
+<li>实践：马尔可夫链收敛速度，不同降温参数，可逆性的优势<br><em>本博客基于个人学习整理，主要参考 J. Chang 的 Stochastic Processes 讲义。如有错误或不足之处，欢迎交流指正。</em></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B/" rel="tag"># 随机过程</a>
+              <a href="/tags/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE/" rel="tag"># 马尔可夫链</a>
+              <a href="/tags/MCMC/" rel="tag"># MCMC</a>
+              <a href="/tags/%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB/" rel="tag"># 模拟退火</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/29/Hello-World-%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" rel="prev" title="Hello World - 我的第一篇博客">
+                  <i class="fa fa-angle-left"></i> Hello World - 我的第一篇博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">here-ly</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
